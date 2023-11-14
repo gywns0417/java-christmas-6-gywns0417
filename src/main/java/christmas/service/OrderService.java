@@ -29,6 +29,7 @@ public class OrderService {
         while (true) {
             try {
                 messagePrinter.run();
+                clearMenu();
                 OrderMenu orderMenu = new OrderMenu(inputSupplier.get());
                 return createOrder(orderMenu, orderMenu.getOrderMenuQuantity(), strategies);
             } catch (IllegalArgumentException e) {
@@ -47,7 +48,7 @@ public class OrderService {
             if (menuMap.containsKey(menuName)) {
                 throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
             }
-            strategy.putMenu(getMenuMap(strategy),menuName ,quantity); // 전략에 따라 해당하는 MenuMap에 put
+            strategy.putMenu(menuMap, menuName ,quantity); // 전략에 따라 해당하는 MenuMap에 put
         }
         return new Order(orderMenu, appetizers, dessert, drink, mainDish);
     }
@@ -65,5 +66,12 @@ public class OrderService {
         if (menuStrategy instanceof DrinkStrategy) return drink;
         if (menuStrategy instanceof MainDishStrategy) return mainDish;
         throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
+    }
+
+    private void clearMenu() {
+        appetizers.clear();
+        dessert.clear();
+        drink.clear();
+        mainDish.clear();
     }
 }
