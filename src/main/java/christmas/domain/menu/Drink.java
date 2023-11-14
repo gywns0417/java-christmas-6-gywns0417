@@ -14,16 +14,12 @@ public enum Drink implements Menu {
         this.amount = amount;
     }
 
+    @Override
     public int getAmount() {
         return amount;
     }
 
     public static int getTotalAmount(HashMap<String, Integer> orderedMenuQuantities) {
-        int totalAmount = 0;
-        for (Entry<String, Integer> menu : orderedMenuQuantities.entrySet()) {
-            totalAmount += valueOf(menu.getKey()).getAmount() * menu.getValue();
-        }
-        return totalAmount;
+        return Menu.getTotalAmount(Drink.class, orderedMenuQuantities);
     }
-
 }
