@@ -1,5 +1,7 @@
 package christmas.service;
 
+import static christmas.config.DiscountConfig.FOR_DISCOUNT_MIN_PURCHASE_AMOUNT;
+
 import christmas.domain.discount.Discount;
 import christmas.domain.discount.DiscountContext;
 import christmas.domain.discount.DiscountType;
@@ -10,6 +12,7 @@ import christmas.domain.discount.strategy.GiveawayStrategy;
 import christmas.domain.discount.strategy.SpecialStrategy;
 import christmas.domain.discount.strategy.WeekdayStrategy;
 import christmas.domain.discount.strategy.WeekendStrategy;
+import christmas.domain.order.Order;
 import christmas.dto.OrderDto;
 import christmas.dto.VisitDateDto;
 import java.util.Arrays;
@@ -40,29 +43,26 @@ public class DiscountService {
     }
 
     public Discount createDiscount() {
-        //TODO:enum
-        if (context.getTotalPurchaseAmount() >= 10000) {
-            Map<DiscountType, Integer> discountTypeAmount = strategies.stream()
-                    .collect(Collectors.toMap(
-                            DiscountStrategy::getDiscountType,
-                            strategy -> strategy.accept(context),
-                            Integer::sum
-                    ));
-
-            HashMap<DiscountType, Integer> discountTypeAmountHashMap = new HashMap<>(discountTypeAmount);
-            return new Discount(discountTypeAmountHashMap);
+        if (context.getTotalPurchaseAmount() >= FOR_DISCOUNT_MIN_PURCHASE_AMOUNT.getAmount()) {
+            return new Discount(createDiscountTypeAmount());
         }
+        return new Discount(createEmptyDiscountTypeAmount());
+    }
 
+    private HashMap<DiscountType, Integer> createDiscountTypeAmount() {
+        Map<DiscountType, Integer> discountTypeAmount = strategies.stream()
+                .collect(Collectors.toMap(
+                        DiscountStrategy::getDiscountType,
+                        strategy -> strategy.accept(context),
+                        Integer::sum
+                ));
+        return (HashMap<DiscountType, Integer>) discountTypeAmount;
+    }
+
+    private HashMap<DiscountType, Integer> createEmptyDiscountTypeAmount() {
         Map<DiscountType, Integer> emptyDiscountTypeAmount = Arrays.stream(DiscountType.values())
                 .collect(Collectors.toMap(Function.identity(), value -> 0));
-
-        HashMap<DiscountType, Integer> emptyDiscountTypeAmountHashMAp = new HashMap<>(emptyDiscountTypeAmount);
-        return new Discount(emptyDiscountTypeAmountHashMAp);
-    }
-    // TODO : dessertAmount 등은 값이 변하는지 확인 필요(필요시 dto)
-
-    public TotalDiscount 현(Discount discount) {
-        return new TotalDiscount(discount.calculateTotalDiscount());
+        return (HashMap<DiscountType, Integer>) emptyDiscountTypeAmount;
     }
 }
 
