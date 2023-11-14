@@ -2,11 +2,9 @@ package christmas.dto;
 
 import java.util.HashMap;
 
-public record OrderDto (HashMap<String, Integer> splitMenuQuantity,
-                        HashMap<String, Integer> appetizers,
-                        HashMap<String, Integer> dessert,
-                        HashMap<String, Integer> drink,
+public record OrderDto (HashMap<String, Integer> dessert,
                         HashMap<String, Integer> mainDish,
-                        int totalPurchaseAmount) {
+                        int totalPurchaseAmount,
+                        HashMap<String, Integer> orderMenuQuantity) {
 
 }

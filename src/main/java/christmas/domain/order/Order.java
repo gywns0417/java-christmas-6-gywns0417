@@ -5,34 +5,35 @@ package christmas.domain.order;
 // 상태 : 총 주문 금액, 메뉴별 주문 목록들(메뉴 이름, 개수)
 // 행위 : 총 주문 금액 계산
 
+import static christmas.config.ErrorMessage.MENU_QUANTITY_INPUT_ERROR_MESSAGE;
+
 import christmas.domain.menu.Appetizer;
 import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.MainDish;
 import christmas.dto.OrderDto;
 import java.util.HashMap;
-public class Order { //TODO : 파라미터 객체 고려 및 일급 컬렉션 적용
-    private final HashMap<String, Integer> splitMenuQuantity;
+public class Order {
+    private final OrderMenu orderMenu;
     private final HashMap<String, Integer> appetizer;
     private final HashMap<String, Integer> dessert;
     private final HashMap<String, Integer> drink;
     private final HashMap<String, Integer> mainDish;
-    private final int totalPurchaseAmount;
 
-    public Order(HashMap<String, Integer> splitMenuQuantity,
+    public Order(OrderMenu orderMenu,
                  HashMap<String, Integer> appetizer,
                  HashMap<String, Integer> dessert,
                  HashMap<String, Integer> drink,
                  HashMap<String, Integer> mainDish) {
-        this.splitMenuQuantity = splitMenuQuantity;
+        this.orderMenu = orderMenu;
         this.appetizer = appetizer;
         this.dessert = dessert;
         this.drink = drink;
         this.mainDish = mainDish;
-        this.totalPurchaseAmount = calculateTotalPurchaseAmount();
+        validatePurchaseOnlyDrinks();
     }
 
-    private int calculateTotalPurchaseAmount() {
+    public int calculateTotalPurchaseAmount() {
         int appetizerAmount = Appetizer.getTotalAmount(appetizer);
         int dessertAmount = Dessert.getTotalAmount(dessert);
         int drinkAmount = Drink.getTotalAmount(drink);
@@ -41,7 +42,12 @@ public class Order { //TODO : 파라미터 객체 고려 및 일급 컬렉션 �
     }
 
     public OrderDto toDto() {
-        return new OrderDto(splitMenuQuantity, appetizer, dessert, drink, mainDish, totalPurchaseAmount);
+        return new OrderDto(dessert, mainDish, calculateTotalPurchaseAmount(), orderMenu.getOrderMenuQuantity());
     }
 
+    private void validatePurchaseOnlyDrinks() {
+        if (appetizer.isEmpty() && dessert.isEmpty() && mainDish.isEmpty()) {
+            throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
+        }
+    }
 }
