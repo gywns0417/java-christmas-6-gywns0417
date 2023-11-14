@@ -5,6 +5,7 @@ import static christmas.config.DiscountConfig.CHRISTMAS_DISCOUNT_START_AMOUNT;
 import static christmas.config.EventConfig.CHRISTMAS_DAY;
 
 import christmas.domain.discount.DiscountContext;
+import christmas.domain.discount.DiscountType;
 
 public class ChristmasCountdownStrategy implements DiscountStrategy {
 
@@ -21,5 +22,10 @@ public class ChristmasCountdownStrategy implements DiscountStrategy {
         return (CHRISTMAS_DISCOUNT_START_AMOUNT.getAmount() +
                 (context.getDate() * CHRISTMAS_DISCOUNT_INCREASE_AMOUNT.getAmount())
                 - CHRISTMAS_DISCOUNT_INCREASE_AMOUNT.getAmount());
+    }
+
+    @Override
+    public DiscountType getDiscountType() {
+        return DiscountType.CHRISTMAS_COUNTDOWN;
     }
 }

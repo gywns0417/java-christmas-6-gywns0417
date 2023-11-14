@@ -3,7 +3,8 @@ package christmas.domain.discount.strategy;
 import static christmas.config.DiscountConfig.WEEKEND_MAIN_DISH_DISCOUNT_AMOUNT;
 
 import christmas.domain.discount.DiscountContext;
-import christmas.domain.discount.Weekend;
+import christmas.config.Weekend;
+import christmas.domain.discount.DiscountType;
 import java.util.Arrays;
 
 public class WeekendStrategy implements DiscountStrategy {
@@ -24,5 +25,10 @@ public class WeekendStrategy implements DiscountStrategy {
             totalQuantity += quantity;
         }
         return totalQuantity * WEEKEND_MAIN_DISH_DISCOUNT_AMOUNT.getAmount();
+    }
+
+    @Override
+    public DiscountType getDiscountType() {
+        return DiscountType.WEEKEND;
     }
 }
