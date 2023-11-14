@@ -2,29 +2,34 @@ package christmas.service;
 
 import christmas.domain.discount.Discount;
 import christmas.domain.discount.DiscountContext;
+import christmas.domain.discount.DiscountType;
+import christmas.domain.discount.TotalDiscount;
 import christmas.domain.discount.strategy.ChristmasCountdownStrategy;
+import christmas.domain.discount.strategy.DiscountStrategy;
 import christmas.domain.discount.strategy.GiveawayStrategy;
 import christmas.domain.discount.strategy.SpecialStrategy;
 import christmas.domain.discount.strategy.WeekdayStrategy;
 import christmas.domain.discount.strategy.WeekendStrategy;
 import christmas.dto.OrderDto;
 import christmas.dto.VisitDateDto;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class DiscountService { //TODO: 전략패턴 이점 살리기
-    /* private final List<DiscountStrategy> strategies = List.of(
+public class DiscountService {
+    private final List<DiscountStrategy> strategies = List.of(
             new ChristmasCountdownStrategy(),
             new GiveawayStrategy(),
             new SpecialStrategy(),
             new WeekdayStrategy(),
             new WeekendStrategy()
     );
-
-     */
-
     private final DiscountContext context;
 
     public DiscountService(VisitDateDto visitDateDto, OrderDto orderDto) {
-
         this.context = new DiscountContext(
                 visitDateDto.day(),
                 visitDateDto.date(),
@@ -35,22 +40,30 @@ public class DiscountService { //TODO: 전략패턴 이점 살리기
     }
 
     public Discount createDiscount() {
-        WeekdayStrategy weekdayStrategy = new WeekdayStrategy();
-        WeekendStrategy weekendStrategy = new WeekendStrategy();
-        ChristmasCountdownStrategy christmasCountdownStrategy = new ChristmasCountdownStrategy();
-        SpecialStrategy specialStrategy = new SpecialStrategy();
-        GiveawayStrategy giveawayStrategy = new GiveawayStrategy();
+        //TODO:enum
+        if (context.getTotalPurchaseAmount() >= 10000) {
+            Map<DiscountType, Integer> discountTypeAmount = strategies.stream()
+                    .collect(Collectors.toMap(
+                            DiscountStrategy::getDiscountType,
+                            strategy -> strategy.accept(context),
+                            Integer::sum
+                    ));
 
-        int weekdayDiscount = weekdayStrategy.accept(context);
-        int weekendDiscount = weekendStrategy.accept(context);
-        int christmasDiscount = christmasCountdownStrategy.accept(context);
-        int specialDiscount = specialStrategy.accept(context);
-        int giveawayDiscount = giveawayStrategy.accept(context);
+            HashMap<DiscountType, Integer> discountTypeAmountHashMap = new HashMap<>(discountTypeAmount);
+            return new Discount(discountTypeAmountHashMap);
+        }
 
-        return new Discount(christmasDiscount, weekdayDiscount, weekendDiscount, specialDiscount, giveawayDiscount);
+        Map<DiscountType, Integer> emptyDiscountTypeAmount = Arrays.stream(DiscountType.values())
+                .collect(Collectors.toMap(Function.identity(), value -> 0));
+
+        HashMap<DiscountType, Integer> emptyDiscountTypeAmountHashMAp = new HashMap<>(emptyDiscountTypeAmount);
+        return new Discount(emptyDiscountTypeAmountHashMAp);
     }
     // TODO : dessertAmount 등은 값이 변하는지 확인 필요(필요시 dto)
 
+    public TotalDiscount 현(Discount discount) {
+        return new TotalDiscount(discount.calculateTotalDiscount());
+    }
 }
 
 //TODO : 일단 전략 하나를 구현하기는 했는데, 이걸 어떻게 전략패턴으로 옮길지가 관건. accept() 마다 필요한게 지금 다르다. 좀 더 공부해봐야 할 듯
