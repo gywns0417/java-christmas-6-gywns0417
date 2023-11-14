@@ -1,4 +1,4 @@
-package christmas.domain.discount;
+package christmas.config;
 
 public enum Weekend {
     FRIDAY,
