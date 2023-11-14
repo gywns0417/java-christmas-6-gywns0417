@@ -5,7 +5,7 @@ import static christmas.config.EventConfig.CHRISTMAS_DAY;
 import static christmas.config.EventConfig.EVENT_MONTH;
 import static christmas.config.EventConfig.EVENT_YEAR;
 
-import christmas.domain.discount.Weekday;
+import christmas.config.Weekday;
 import christmas.dto.VisitDateDto;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -46,7 +46,7 @@ public class VisitDate {
         return new VisitDateDto(date, day, star);
     }
 
-    private boolean hasStar() { // TODO: 변동 기준이라 enum 적용?
+    private boolean hasStar() {
         return day.equals(Weekday.SUNDAY.name()) || date == CHRISTMAS_DAY.getValue();
     }
 }
