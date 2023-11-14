@@ -1,5 +1,13 @@
 package christmas.domain.discount;
 
+import static christmas.config.BadgeConfig.BADGE_NONE;
+import static christmas.config.BadgeConfig.FIRST_BADGE;
+import static christmas.config.BadgeConfig.SECOND_BADGE;
+import static christmas.config.BadgeConfig.THIRD_BADGE;
+import static christmas.config.EventConfig.FOR_FIRST_BADGE_AMOUNT_MIN;
+import static christmas.config.EventConfig.FOR_SECOND_BADGE_AMOUNT_MIN;
+import static christmas.config.EventConfig.FOR_THIRD_BADGE_AMOUNT_MIN;
+
 import christmas.dto.TotalDiscountDto;
 
 public class TotalDiscount {
@@ -16,16 +24,16 @@ public class TotalDiscount {
     }
 
     private String giveBadge() {
-        if (totalDiscount >= 20_000) {
-            return "산타";
+        if (totalDiscount >= FOR_FIRST_BADGE_AMOUNT_MIN.getValue()) {
+            return FIRST_BADGE.getBadge();
         }
-        else if (totalDiscount >= 10_000) {
-            return "트리";
+        else if (totalDiscount >= FOR_SECOND_BADGE_AMOUNT_MIN.getValue()) {
+            return SECOND_BADGE.getBadge();
         }
-        else if(totalDiscount >= 5_000) {
-            return "별";
+        else if(totalDiscount >= FOR_THIRD_BADGE_AMOUNT_MIN.getValue()) {
+            return THIRD_BADGE.getBadge();
         }
-        return "없음";
+        return BADGE_NONE.getBadge();
     }
 
     private int calculateDiscountedPurchaseAmount(int totalPurchaseAmount) {
