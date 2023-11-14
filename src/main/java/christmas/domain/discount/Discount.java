@@ -1,5 +1,6 @@
 package christmas.domain.discount;
 
+import christmas.dto.DiscountDto;
 import java.util.HashMap;
 
 public class Discount {
@@ -9,33 +10,39 @@ public class Discount {
         this.discountTypeAmount = new HashMap<>(discountTypeAmount);
     }
 
-    public int calculateTotalDiscount() {
+    public DiscountDto toDto() {
+        return new DiscountDto(getChristmasDiscount(), getWeekdayDiscount(),
+                getWeekendDiscount(), getSpecialDiscount(),
+                getGiveawayDiscount(), calculateTotalDiscount(), hasAnyDiscount());
+    }
+
+    private int calculateTotalDiscount() {
         return discountTypeAmount.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
-    public int getChristmasDiscount() {
+    private int getChristmasDiscount() {
         return discountTypeAmount.get(DiscountType.CHRISTMAS_COUNTDOWN);
     }
 
-    public int getWeekdayDiscount() {
+    private int getWeekdayDiscount() {
         return discountTypeAmount.get(DiscountType.WEEKDAY);
     }
 
-    public int getWeekendDiscount() {
+    private int getWeekendDiscount() {
         return discountTypeAmount.get(DiscountType.WEEKEND);
     }
 
-    public int getSpecialDiscount() {
+    private int getSpecialDiscount() {
         return discountTypeAmount.get(DiscountType.SPECIAL);
     }
 
-    public int getGiveawayDiscount() {
+    private int getGiveawayDiscount() {
         return discountTypeAmount.get(DiscountType.GIVEAWAY);
     }
 
-    public boolean hasAnyDiscount() {
+    private boolean hasAnyDiscount() {
         return calculateTotalDiscount() != 0;
     }
 }
