@@ -22,10 +22,12 @@ import christmas.dto.DiscountDto;
 import christmas.dto.OrderDto;
 import christmas.dto.TotalDiscountDto;
 import christmas.dto.VisitDateDto;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class ResultOutputView {
+    private static final DecimalFormat commaFormat = new DecimalFormat("#,###");
 
     public static void printResult(VisitDateDto visitDateDto, OrderDto orderDto, DiscountDto discountDto,
                                    TotalDiscountDto totalDiscountDto) {
@@ -49,7 +51,8 @@ public class ResultOutputView {
     }
 
     private static void printTotalPurchaseAmount(int totalPurchaseAmount) {
-        System.out.printf(RESULT_TOTAL_PURCHASE_AMOUNT_MESSAGE.getMessage(), totalPurchaseAmount);
+        System.out.printf(RESULT_TOTAL_PURCHASE_AMOUNT_MESSAGE.getMessage(), commaFormat.format(totalPurchaseAmount));
+
     }
 
     private static void printGiveaway(int giveawayDiscount) {
@@ -63,19 +66,24 @@ public class ResultOutputView {
     private static void printDiscountHistory(DiscountDto discountDto) {
         System.out.print(RESULT_DISCOUNT_HISTORY_MESSAGE.getMessage());
         if (discountDto.christmasCountdownDiscount() != 0) {
-            System.out.printf(RESULT_CHRISTMAS_DISCOUNT.getMessage(), discountDto.christmasCountdownDiscount());
+            System.out.printf(RESULT_CHRISTMAS_DISCOUNT.getMessage(),
+                    commaFormat.format(discountDto.christmasCountdownDiscount()));
         }
         if (discountDto.weekdayDiscount() != 0) {
-            System.out.printf(RESULT_WEEKDAY_DISCOUNT.getMessage(), discountDto.weekdayDiscount());
+            System.out.printf(RESULT_WEEKDAY_DISCOUNT.getMessage(),
+                    commaFormat.format(discountDto.weekdayDiscount()));
         }
         if (discountDto.weekendDiscount() != 0) {
-            System.out.printf(RESULT_WEEKEND_DISCOUNT.getMessage(), discountDto.weekendDiscount());
+            System.out.printf(RESULT_WEEKEND_DISCOUNT.getMessage(),
+                    commaFormat.format(discountDto.weekendDiscount()));
         }
         if (discountDto.specialDiscount() != 0) {
-            System.out.printf(RESULT_SPECIAL_DISCOUNT.getMessage(), discountDto.specialDiscount());
+            System.out.printf(RESULT_SPECIAL_DISCOUNT.getMessage(),
+                    commaFormat.format(discountDto.specialDiscount()));
         }
         if (discountDto.giveawayDiscount() != 0) {
-            System.out.printf(RESULT_GIVEAWAY_DISCOUNT.getMessage(), discountDto.giveawayDiscount());
+            System.out.printf(RESULT_GIVEAWAY_DISCOUNT.getMessage(),
+                    commaFormat.format(discountDto.giveawayDiscount()));
         }
         if (!discountDto.hasAnyDiscount()) {
             System.out.print(NONE.getMessage());
@@ -83,10 +91,10 @@ public class ResultOutputView {
     }
 
     private static void printTotalDiscount(int totalDiscount) {
-        System.out.printf(RESULT_TOTAL_DISCOUNT_RESULT_MESSAGE.getMessage(), totalDiscount);
+        System.out.printf(RESULT_TOTAL_DISCOUNT_RESULT_MESSAGE.getMessage(), commaFormat.format(totalDiscount));
     }
     private static void printExpectPurchaseAmount(int discountedPurchaseAmount) {
-        System.out.printf(RESULT_EXPECT_PAYMENT_MESSAGE.getMessage(), discountedPurchaseAmount);
+        System.out.printf(RESULT_EXPECT_PAYMENT_MESSAGE.getMessage(), commaFormat.format(discountedPurchaseAmount));
     }
 
     private static void printBadge(String badge) {
