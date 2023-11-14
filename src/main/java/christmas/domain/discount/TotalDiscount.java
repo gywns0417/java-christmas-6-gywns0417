@@ -1,15 +1,21 @@
 package christmas.domain.discount;
 
-import christmas.dto.OrderDto;
+import christmas.dto.TotalDiscountDto;
 
 public class TotalDiscount {
     private final int totalDiscount;
+    private final int afterDiscountAmount;
 
-    public TotalDiscount(int totalDiscount) {
+    public TotalDiscount(int totalDiscount, int totalPurchaseAmount) {
         this.totalDiscount = totalDiscount;
+        this.afterDiscountAmount = calculateDiscountedPurchaseAmount(totalPurchaseAmount);
     }
 
-    public String giveBadge() {
+    public TotalDiscountDto toDto() {
+        return new TotalDiscountDto(totalDiscount, afterDiscountAmount, giveBadge());
+    }
+
+    private String giveBadge() {
         if (totalDiscount >= 20_000) {
             return "산타";
         }
@@ -22,11 +28,7 @@ public class TotalDiscount {
         return "없음";
     }
 
-    public int getTotalDiscount() {
-        return totalDiscount;
-    }
-
-    public int getDiscountedPurchaseAmount(OrderDto orderDto) {
-        return orderDto.totalPurchaseAmount() - getTotalDiscount();
+    private int calculateDiscountedPurchaseAmount(int totalPurchaseAmount) {
+        return totalPurchaseAmount - totalDiscount;
     }
 }

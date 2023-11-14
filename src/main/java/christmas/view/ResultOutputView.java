@@ -35,7 +35,7 @@ public class ResultOutputView {
         printGiveaway(discountDto.giveawayDiscount());
         printDiscountHistory(discountDto);
         printTotalDiscount(totalDiscountDto.totalDiscount());
-        printExpectPurchaseAmount(totalDiscountDto.discountedPurchaseAmount());
+        printExpectPurchaseAmount(totalDiscountDto.afterDiscountAmount());
         printBadge(totalDiscountDto.badge());
     }
     private static void printHeaderMessage(int date) {
