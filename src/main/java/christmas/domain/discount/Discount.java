@@ -1,52 +1,41 @@
 package christmas.domain.discount;
 
-import christmas.dto.DiscountDto;
+import java.util.HashMap;
 
 public class Discount {
-    private final int christmasCountdownDiscount;
-    private final int weekdayDiscount;
-    private final int weekendDiscount;
-    private final int specialDiscount;
-    private final int giveawayDiscount;
-    private final int totalDiscount;
-    private final String badge;
+    private final HashMap<DiscountType, Integer> discountTypeAmount;
 
-    public Discount(
-            int christmasCountdownDiscount,
-            int weekdayDiscount,
-            int weekendDiscount,
-            int specialDiscount,
-            int giveawayDiscount
-    ) {
-        this.christmasCountdownDiscount = christmasCountdownDiscount;
-        this.weekdayDiscount = weekdayDiscount;
-        this.weekendDiscount = weekendDiscount;
-        this.specialDiscount = specialDiscount;
-        this.giveawayDiscount = giveawayDiscount;
-        this.totalDiscount = calculateTotalDiscount();
-        this.badge = giveBadge();
+    public Discount(HashMap<DiscountType, Integer> discountTypeAmount) {
+        this.discountTypeAmount = new HashMap<>(discountTypeAmount);
     }
 
-    public DiscountDto toDto() {
-        return new DiscountDto(christmasCountdownDiscount, weekdayDiscount, weekendDiscount,
-                specialDiscount, giveawayDiscount, totalDiscount, badge);
+    public int calculateTotalDiscount() {
+        return discountTypeAmount.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
-    private int calculateTotalDiscount() {
-        return christmasCountdownDiscount + weekdayDiscount + weekendDiscount + specialDiscount + giveawayDiscount;
+    public int getChristmasDiscount() {
+        return discountTypeAmount.get(DiscountType.CHRISTMAS_COUNTDOWN);
     }
-    // TODO: 매직넘버 상수화 및 배지 로직 다른 객체 부여 고려
 
-    private String giveBadge() {
-        if (totalDiscount >= 20_000) {
-            return "산타";
-        }
-        else if (totalDiscount >= 10_000) {
-            return "트리";
-        }
-        else if(totalDiscount >= 5_000) {
-            return "별";
-        }
-        return "없음";
+    public int getWeekdayDiscount() {
+        return discountTypeAmount.get(DiscountType.WEEKDAY);
+    }
+
+    public int getWeekendDiscount() {
+        return discountTypeAmount.get(DiscountType.WEEKEND);
+    }
+
+    public int getSpecialDiscount() {
+        return discountTypeAmount.get(DiscountType.SPECIAL);
+    }
+
+    public int getGiveawayDiscount() {
+        return discountTypeAmount.get(DiscountType.GIVEAWAY);
+    }
+
+    public boolean hasAnyDiscount() {
+        return calculateTotalDiscount() != 0;
     }
 }
