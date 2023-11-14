@@ -23,16 +23,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DiscountService {
-    private final List<DiscountStrategy> strategies = List.of(
-            new ChristmasCountdownStrategy(),
-            new GiveawayStrategy(),
-            new SpecialStrategy(),
-            new WeekdayStrategy(),
-            new WeekendStrategy()
-    );
     private final DiscountContext context;
-
-    public DiscountService(VisitDateDto visitDateDto, OrderDto orderDto) {
+    private final List<DiscountStrategy> strategies;
+    public DiscountService(VisitDateDto visitDateDto, OrderDto orderDto, List<DiscountStrategy> strategies) {
         this.context = new DiscountContext(
                 visitDateDto.day(),
                 visitDateDto.date(),
@@ -40,6 +33,7 @@ public class DiscountService {
                 orderDto.mainDish(),
                 visitDateDto.star(),
                 orderDto.totalPurchaseAmount());
+        this.strategies = strategies;
     }
 
     public Discount createDiscount() {

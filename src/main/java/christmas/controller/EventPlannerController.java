@@ -3,6 +3,7 @@ package christmas.controller;
 import christmas.domain.date.VisitDate;
 import christmas.domain.discount.Discount;
 import christmas.domain.discount.TotalDiscount;
+import christmas.domain.discount.strategy.DiscountStrategy;
 import christmas.domain.menu.strategy.AppetizerStrategy;
 import christmas.domain.menu.strategy.DessertStrategy;
 import christmas.domain.menu.strategy.DrinkStrategy;
@@ -24,13 +25,19 @@ import java.util.List;
 
 
 public class EventPlannerController {
-    //TODO : 금액에 콤마 넣기
-    List<MenuStrategy> strategies = List.of(new AppetizerStrategy(), new DessertStrategy(),
-            new DrinkStrategy(), new MainDishStrategy());
-    //TODO: 의존성 주입 구현해야함
-    OrderService orderService = new OrderService(strategies);
-    DateService dateService = new DateService();
-    TotalDiscountService totalDiscountService = new TotalDiscountService();
+    private final OrderService orderService;
+    private final DateService dateService;
+    private final TotalDiscountService totalDiscountService;
+    private final List<DiscountStrategy> discountStrategies;
+
+    public EventPlannerController(OrderService orderService, DateService dateService,
+                                  TotalDiscountService totalDiscountService,
+                                  List<DiscountStrategy> discountStrategies) {
+        this.orderService = orderService;
+        this.dateService = dateService;
+        this.totalDiscountService = totalDiscountService;
+        this.discountStrategies = discountStrategies;
+    }
 
     public void run() {
         MessageOutputView.printWelcomeMessage();
@@ -38,7 +45,7 @@ public class EventPlannerController {
                 MessageOutputView::printErrorMessage).toDto();
         OrderDto orderDto = orderService.order(InputView::getUserInput, MessageOutputView::printMenuQuantityInputRequestMessage,
                 MessageOutputView::printErrorMessage).toDto();
-        DiscountService discountService = new DiscountService(visitDateDto, orderDto);
+        DiscountService discountService = new DiscountService(visitDateDto, orderDto, discountStrategies);
         DiscountDto discountDto = discountService.createDiscount().toDto();
         TotalDiscountDto totalDiscountDto = totalDiscountService.createTotalDiscount(discountDto, orderDto).toDto();
         ResultOutputView.printResult(visitDateDto, orderDto, discountDto, totalDiscountDto);

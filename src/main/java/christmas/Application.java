@@ -4,7 +4,8 @@ import christmas.controller.EventPlannerController;
 
 public class Application {
     public static void main(String[] args) {
-        EventPlannerController controller = new EventPlannerController();
+        EventPlannerFactory factory = new EventPlannerFactory();
+        EventPlannerController controller = factory.createEventPlannerController();
         controller.run();
     }
 }
