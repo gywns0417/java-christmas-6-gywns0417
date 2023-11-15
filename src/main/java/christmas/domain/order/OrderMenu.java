@@ -1,6 +1,7 @@
 package christmas.domain.order;
 
 import static christmas.config.ErrorMessage.MENU_QUANTITY_INPUT_ERROR_MESSAGE;
+import static christmas.config.ErrorMessage.PURCHASE_QUANTITIES_OVER_MAX_ERROR_MESSAGE;
 import static christmas.config.EventConfig.MENU_TOTAL_QUANTITY_MAX;
 
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class OrderMenu {
                 .mapToInt(Integer::intValue)
                 .sum() > MENU_TOTAL_QUANTITY_MAX.getValue();
         if (isOverMenuQuantityMax) {
-            throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
+            throw new IllegalArgumentException(PURCHASE_QUANTITIES_OVER_MAX_ERROR_MESSAGE.getMessage());
         }
     }
 
