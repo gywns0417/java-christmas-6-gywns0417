@@ -4,7 +4,7 @@ import christmas.domain.date.VisitDate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class DateService {
+public class VisitDateService { //TODO : 네이밍 VisitDateService
     public VisitDate getDateInput(Supplier<String> inputSupplier, Runnable messagePrinter,
                                   Consumer<String> errorMessagePrinter) {
         while (true) {

@@ -12,7 +12,7 @@ import christmas.domain.menu.strategy.DessertStrategy;
 import christmas.domain.menu.strategy.DrinkStrategy;
 import christmas.domain.menu.strategy.MainDishStrategy;
 import christmas.domain.menu.strategy.MenuStrategy;
-import christmas.service.DateService;
+import christmas.service.VisitDateService;
 import christmas.service.OrderService;
 import christmas.service.TotalDiscountService;
 import java.util.List;
@@ -25,10 +25,10 @@ public class EventPlannerFactory {
                 new ChristmasCountdownStrategy(), new GiveawayStrategy(),
                 new SpecialStrategy(), new WeekdayStrategy(), new WeekendStrategy());
         OrderService orderService = new OrderService();
-        DateService dateService = new DateService();
+        VisitDateService visitDateService = new VisitDateService();
         TotalDiscountService totalDiscountService = new TotalDiscountService();
 
-        return new EventPlannerController(orderService, dateService,
+        return new EventPlannerController(orderService, visitDateService,
                 totalDiscountService, discountStrategies, menuStrategies);
     }
 }
