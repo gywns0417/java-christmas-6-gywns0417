@@ -6,6 +6,6 @@ import christmas.dto.OrderDto;
 
 public class TotalDiscountService {
     public TotalDiscount createTotalDiscount(DiscountDto discountDto, OrderDto orderDto) {
-        return new TotalDiscount(discountDto.totalDiscount(), orderDto.totalPurchaseAmount());
+        return new TotalDiscount(discountDto.totalDiscount(), orderDto.totalPurchaseAmount(), discountDto.giveawayDiscount());
     }
 }

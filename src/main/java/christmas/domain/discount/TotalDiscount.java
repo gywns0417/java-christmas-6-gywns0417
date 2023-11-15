@@ -14,9 +14,10 @@ public class TotalDiscount {
     private final int totalDiscount;
     private final int afterDiscountAmount;
 
-    public TotalDiscount(int totalDiscount, int totalPurchaseAmount) {
+    public TotalDiscount(int totalDiscount, int totalPurchaseAmount, int giveawayDiscount) {
         this.totalDiscount = totalDiscount;
-        this.afterDiscountAmount = calculateDiscountedPurchaseAmount(totalPurchaseAmount);
+        this.afterDiscountAmount = calculateAfterDiscountAmount(totalPurchaseAmount,
+                totalDiscount, giveawayDiscount);
     }
 
     public TotalDiscountDto toDto() {
@@ -36,7 +37,7 @@ public class TotalDiscount {
         return BADGE_NONE.getBadge();
     }
 
-    private int calculateDiscountedPurchaseAmount(int totalPurchaseAmount) {
-        return totalPurchaseAmount - totalDiscount;
+    private int calculateAfterDiscountAmount(int totalPurchaseAmount, int totalDiscount, int giveawayDiscount) {
+        return totalPurchaseAmount - totalDiscount + giveawayDiscount;
     }
 }
