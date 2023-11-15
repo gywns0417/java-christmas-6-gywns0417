@@ -50,7 +50,6 @@ public class Order {
             MenuStrategy strategy = findStrategy(menuName, strategies);
             HashMap<String, Integer> menuMap = getMenuMap(strategy);
 
-            validateMenuUnique(menuMap, menuName);
             strategy.putMenu(menuMap, menuName ,quantity);
         }
     }
@@ -68,12 +67,6 @@ public class Order {
         if (menuStrategy instanceof DrinkStrategy) return drink;
         if (menuStrategy instanceof MainDishStrategy) return mainDish;
         throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
-    }
-
-    private void validateMenuUnique(HashMap<String, Integer> menuMap, String menuName) {
-        if (menuMap.containsKey(menuName)) {
-            throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
-        }
     }
 
     private void validatePurchaseOnlyDrinks() {

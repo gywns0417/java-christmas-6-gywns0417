@@ -25,6 +25,26 @@ public class OrderMenu {
         return inputOrderMenu;
     }
 
+    private HashMap<String, Integer> splitOrderMenu(String inputOrderMenu) {
+        HashMap<String, Integer> splitMenuQuantity = new HashMap<>();
+        StringTokenizer st = new StringTokenizer(inputOrderMenu, splitDelim);
+
+        while (st.hasMoreTokens()) {
+            String menuName = st.nextToken();
+            int quantity = Integer.parseInt(st.nextToken());
+
+            validateMenuUnique(splitMenuQuantity, menuName);
+            splitMenuQuantity.put(menuName, quantity);
+        }
+        return splitMenuQuantity;
+    }
+
+    private void validateMenuUnique(HashMap<String, Integer> splitMenuQuantity, String menuName) {
+        if (splitMenuQuantity.containsKey(menuName)) {
+            throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
+        }
+    }
+
     private void validateMenuQuantities() {
         boolean isOverMenuQuantityMax = orderMenuQuantity.values().stream()
                 .mapToInt(Integer::intValue)
@@ -32,16 +52,6 @@ public class OrderMenu {
         if (isOverMenuQuantityMax) {
             throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
         }
-    }
-
-    private HashMap<String, Integer> splitOrderMenu(String inputOrderMenu) {
-        HashMap<String, Integer> splitMenuQuantity = new HashMap<>();
-        StringTokenizer st = new StringTokenizer(inputOrderMenu, splitDelim);
-
-        while (st.hasMoreTokens()) {
-            splitMenuQuantity.put(st.nextToken(), Integer.parseInt(st.nextToken()));
-        }
-        return splitMenuQuantity;
     }
 
     public HashMap<String, Integer> getOrderMenuQuantity() {
