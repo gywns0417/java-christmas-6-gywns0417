@@ -5,7 +5,6 @@ import static christmas.config.BadgeConfig.FIRST_BADGE;
 import static christmas.config.BadgeConfig.SECOND_BADGE;
 import static christmas.config.BadgeConfig.THIRD_BADGE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.dto.TotalDiscountDto;
 import org.junit.jupiter.api.DisplayName;

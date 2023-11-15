@@ -5,12 +5,8 @@ import static christmas.domain.discount.DiscountType.GIVEAWAY;
 import static christmas.domain.discount.DiscountType.SPECIAL;
 import static christmas.domain.discount.DiscountType.WEEKDAY;
 import static christmas.domain.discount.DiscountType.WEEKEND;
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
-import christmas.domain.date.VisitDate;
 import christmas.dto.DiscountDto;
 import java.util.HashMap;
 import org.junit.jupiter.api.DisplayName;

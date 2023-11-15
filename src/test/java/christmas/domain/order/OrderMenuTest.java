@@ -1,9 +1,7 @@
 package christmas.domain.order;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
 import org.junit.jupiter.api.DisplayName;

@@ -3,7 +3,6 @@ package christmas.domain.order;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.domain.menu.strategy.AppetizerStrategy;
 import christmas.domain.menu.strategy.DessertStrategy;

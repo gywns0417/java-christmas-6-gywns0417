@@ -1,10 +1,7 @@
 package christmas.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import christmas.domain.discount.Discount;
-import christmas.domain.discount.DiscountContext;
 import christmas.domain.discount.strategy.ChristmasCountdownStrategy;
 import christmas.domain.discount.strategy.DiscountStrategy;
 import christmas.domain.discount.strategy.GiveawayStrategy;
