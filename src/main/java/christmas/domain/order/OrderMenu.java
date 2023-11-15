@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 public class OrderMenu {
     private static final String orderMenuRegex = "^([가-힣]+-[1-9]\\d*(,\\s*[가-힣]+-[1-9]\\d*)*)$";
+    private static final String splitDelim = ",-";
 
     private final HashMap<String, Integer> orderMenuQuantity;
 
@@ -35,7 +36,7 @@ public class OrderMenu {
 
     private HashMap<String, Integer> splitOrderMenu(String inputOrderMenu) {
         HashMap<String, Integer> splitMenuQuantity = new HashMap<>();
-        StringTokenizer st = new StringTokenizer(inputOrderMenu, ",-");
+        StringTokenizer st = new StringTokenizer(inputOrderMenu, splitDelim);
 
         while (st.hasMoreTokens()) {
             splitMenuQuantity.put(st.nextToken(), Integer.parseInt(st.nextToken()));
