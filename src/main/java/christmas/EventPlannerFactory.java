@@ -21,9 +21,11 @@ public class EventPlannerFactory {
     public EventPlannerController createEventPlannerController() {
         List<MenuStrategy> menuStrategies = List.of(new AppetizerStrategy(), new DessertStrategy(),
                 new DrinkStrategy(), new MainDishStrategy());
+
         List<DiscountStrategy> discountStrategies = List.of(
                 new ChristmasCountdownStrategy(), new GiveawayStrategy(),
                 new SpecialStrategy(), new WeekdayStrategy(), new WeekendStrategy());
+
         OrderService orderService = new OrderService();
         VisitDateService visitDateService = new VisitDateService();
         TotalDiscountService totalDiscountService = new TotalDiscountService();

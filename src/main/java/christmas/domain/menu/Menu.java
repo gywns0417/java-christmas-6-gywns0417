@@ -8,6 +8,7 @@ public interface Menu {
     static <T extends Enum<T> & Menu> int getTotalAmount(Class<T> menuClass,
                                                          HashMap<String, Integer> orderedMenuQuantities) {
         int totalAmount = 0;
+
         for (Entry<String, Integer> menu : orderedMenuQuantities.entrySet()) {
             totalAmount += Enum.valueOf(menuClass, menu.getKey()).getAmount() * menu.getValue();
         }

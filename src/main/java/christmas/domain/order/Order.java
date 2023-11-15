@@ -47,11 +47,11 @@ public class Order {
             String menuName = menuQuantity.getKey();
             int quantity = menuQuantity.getValue();
 
-            MenuStrategy strategy = findStrategy(menuName, strategies); // 전략 검색
+            MenuStrategy strategy = findStrategy(menuName, strategies);
             HashMap<String, Integer> menuMap = getMenuMap(strategy);
 
             validateMenuUnique(menuMap, menuName);
-            strategy.putMenu(menuMap, menuName ,quantity); // 전략에 따라 해당하는 MenuMap에 put
+            strategy.putMenu(menuMap, menuName ,quantity);
         }
     }
 
