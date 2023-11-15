@@ -23,23 +23,31 @@ public class VisitDate {
     }
 
     private int validateDate(String date) {
-        int localDate;
+        validateDateStartsZero(date);
+        int localDate = validateDateNumeric(date);
+        validateDateRange(localDate);
+        return localDate;
+    }
 
+    private void validateDateStartsZero(String date) {
         if (date.startsWith("0")) {
             throw new IllegalArgumentException(DATE_INPUT_ERROR_MESSAGE.getMessage());
         }
+    }
 
+    private int validateDateNumeric(String date) {
         try {
-            localDate = Integer.parseInt(date);
+            return Integer.parseInt(date);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(DATE_INPUT_ERROR_MESSAGE.getMessage());
         }
+    }
 
+    private void validateDateRange(int localDate) {
         if (localDate < 1 || localDate > YearMonth.of(
                 EVENT_YEAR.getValue(), EVENT_MONTH.getValue()).lengthOfMonth()) {
             throw new IllegalArgumentException(DATE_INPUT_ERROR_MESSAGE.getMessage());
         }
-        return localDate;
     }
 
     public VisitDateDto toDto() {
