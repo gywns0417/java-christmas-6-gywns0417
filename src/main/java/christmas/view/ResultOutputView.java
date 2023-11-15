@@ -1,6 +1,8 @@
 package christmas.view;
 
+import static christmas.config.DiscountConfig.FOR_DISCOUNT_MIN_PURCHASE_AMOUNT;
 import static christmas.config.EventConfig.EVENT_MONTH;
+import static christmas.config.EventMessage.EVENT_NEEDS_MIN_PURCHASE_AMOUNT_MESSAGE;
 import static christmas.config.ResultMessage.GIVEAWAY_ITEM_QUANTITY;
 import static christmas.config.ResultMessage.MENU_QUANTITY_FORMAT;
 import static christmas.config.ResultMessage.NONE;
@@ -41,6 +43,7 @@ public class ResultOutputView {
         printTotalDiscount(totalDiscountDto.totalDiscount());
         printExpectPurchaseAmount(totalDiscountDto.afterDiscountAmount());
         printBadge(totalDiscountDto.badge());
+        printEventApplyMessage(orderDto.totalPurchaseAmount());
     }
     private static void printHeaderMessage(int date) {
         System.out.printf(RESULT_HEADER_MESSAGE.getMessage(), EVENT_MONTH.getValue(), date);
@@ -101,5 +104,12 @@ public class ResultOutputView {
 
     private static void printBadge(String badge) {
         System.out.printf(RESULT_BADGE_MESSAGE.getMessage(), EVENT_MONTH.getValue(), badge);
+    }
+
+    private static void printEventApplyMessage(int totalPurchaseAmount) {
+        if (totalPurchaseAmount < FOR_DISCOUNT_MIN_PURCHASE_AMOUNT.getAmount()) {
+            System.out.printf(EVENT_NEEDS_MIN_PURCHASE_AMOUNT_MESSAGE.getMessage(),
+                    amountFormat.format(FOR_DISCOUNT_MIN_PURCHASE_AMOUNT.getAmount()));
+        }
     }
 }
