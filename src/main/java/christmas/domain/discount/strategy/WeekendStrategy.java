@@ -2,8 +2,8 @@ package christmas.domain.discount.strategy;
 
 import static christmas.config.DiscountConfig.WEEKEND_MAIN_DISH_DISCOUNT_AMOUNT;
 
-import christmas.domain.discount.DiscountContext;
 import christmas.config.Weekend;
+import christmas.domain.discount.DiscountContext;
 import christmas.domain.discount.DiscountType;
 import java.util.Arrays;
 

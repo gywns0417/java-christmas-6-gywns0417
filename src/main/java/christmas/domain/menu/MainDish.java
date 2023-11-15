@@ -1,7 +1,6 @@
 package christmas.domain.menu;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 public enum MainDish implements Menu {
     티본스테이크(55_000),

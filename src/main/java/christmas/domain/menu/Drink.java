@@ -1,7 +1,6 @@
 package christmas.domain.menu;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 public enum Drink implements Menu {
     제로콜라(3_000),
