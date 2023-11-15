@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 
 public class DiscountService {
     private final DiscountContext context;
-    private final List<DiscountStrategy> strategies;
-    public DiscountService(VisitDateDto visitDateDto, OrderDto orderDto, List<DiscountStrategy> strategies) {
+    public DiscountService(VisitDateDto visitDateDto, OrderDto orderDto) {
         this.context = new DiscountContext(
                 visitDateDto.day(),
                 visitDateDto.date(),
@@ -26,17 +25,16 @@ public class DiscountService {
                 orderDto.mainDish(),
                 visitDateDto.star(),
                 orderDto.totalPurchaseAmount());
-        this.strategies = strategies;
     }
 
-    public Discount createDiscount() {
+    public Discount createDiscount(List<DiscountStrategy> strategies) {
         if (context.getTotalPurchaseAmount() >= FOR_DISCOUNT_MIN_PURCHASE_AMOUNT.getAmount()) {
-            return new Discount(createDiscountTypeAmount());
+            return new Discount(createDiscountTypeAmount(strategies));
         }
         return new Discount(createEmptyDiscountTypeAmount());
     }
 
-    private HashMap<DiscountType, Integer> createDiscountTypeAmount() {
+    private HashMap<DiscountType, Integer> createDiscountTypeAmount(List<DiscountStrategy> strategies) {
         Map<DiscountType, Integer> discountTypeAmount = strategies.stream()
                 .collect(Collectors.toMap(
                         DiscountStrategy::getDiscountType,

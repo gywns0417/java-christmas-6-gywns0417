@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.discount.DiscountContext;
 import christmas.domain.discount.strategy.DiscountStrategy;
 import christmas.domain.menu.strategy.MenuStrategy;
 import christmas.dto.DiscountDto;
@@ -40,8 +41,8 @@ public class EventPlannerController {
                 MessageOutputView::printErrorMessage).toDto();
         OrderDto orderDto = orderService.order(InputView::getUserInput, MessageOutputView::printMenuQuantityInputRequestMessage,
                 MessageOutputView::printErrorMessage, menuStrategies).toDto();
-        DiscountService discountService = new DiscountService(visitDateDto, orderDto, discountStrategies);
-        DiscountDto discountDto = discountService.createDiscount().toDto();
+        DiscountService discountService = new DiscountService(visitDateDto, orderDto);
+        DiscountDto discountDto = discountService.createDiscount(discountStrategies).toDto();
         TotalDiscountDto totalDiscountDto = totalDiscountService.createTotalDiscount(discountDto, orderDto).toDto();
         ResultOutputView.printResult(visitDateDto, orderDto, discountDto, totalDiscountDto);
     }
