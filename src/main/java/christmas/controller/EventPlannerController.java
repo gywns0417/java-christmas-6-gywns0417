@@ -36,6 +36,7 @@ public class EventPlannerController {
 
     public void run() {
         MessageOutputView.printWelcomeMessage();
+
         VisitDateDto visitDateDto = visitDateService.getDateInput(InputView::getUserInput, MessageOutputView::printDateInputRequestMessage,
                 MessageOutputView::printErrorMessage).toDto();
         OrderDto orderDto = orderService.order(InputView::getUserInput, MessageOutputView::printMenuQuantityInputRequestMessage,
@@ -43,6 +44,7 @@ public class EventPlannerController {
         DiscountService discountService = new DiscountService(visitDateDto, orderDto);
         DiscountDto discountDto = discountService.createDiscount(discountStrategies).toDto();
         TotalDiscountDto totalDiscountDto = totalDiscountService.createTotalDiscount(discountDto, orderDto).toDto();
+
         ResultOutputView.printResult(visitDateDto, orderDto, discountDto, totalDiscountDto);
     }
 }
