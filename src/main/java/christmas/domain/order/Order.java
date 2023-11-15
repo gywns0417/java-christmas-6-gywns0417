@@ -1,10 +1,7 @@
 package christmas.domain.order;
 
-// 이 객체는 어떤 상태와 행위를 가지는가?
-// 객체명 : 주문
-// 상태 : 총 주문 금액, 메뉴별 주문 목록들(메뉴 이름, 개수)
-// 행위 : 총 주문 금액 계산
 import static christmas.config.ErrorMessage.MENU_QUANTITY_INPUT_ERROR_MESSAGE;
+import static christmas.config.ErrorMessage.PURCHASE_ONLY_DRINK_ERROR_MESSAGE;
 
 import christmas.domain.menu.Appetizer;
 import christmas.domain.menu.Dessert;
@@ -71,7 +68,7 @@ public class Order {
 
     private void validatePurchaseOnlyDrinks() {
         if (appetizer.isEmpty() && dessert.isEmpty() && mainDish.isEmpty()) {
-            throw new IllegalArgumentException(MENU_QUANTITY_INPUT_ERROR_MESSAGE.getMessage());
+            throw new IllegalArgumentException(PURCHASE_ONLY_DRINK_ERROR_MESSAGE.getMessage());
         }
     }
 }
