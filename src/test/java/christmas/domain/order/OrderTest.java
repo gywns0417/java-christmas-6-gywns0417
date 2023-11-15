@@ -76,7 +76,7 @@ class OrderTest {
         // when, then
         assertThatThrownBy(() -> new Order(orderMenu, menuStrategies))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                .hasMessageContaining("[ERROR] 음료만 주문 시, 주문할 수 없습니다.");
     }
 
 }
