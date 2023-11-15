@@ -16,12 +16,6 @@ public class Discount {
                 getGiveawayDiscount(), calculateTotalDiscount(), hasAnyDiscount());
     }
 
-    private int calculateTotalDiscount() {
-        return discountTypeAmount.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-    }
-
     private int getChristmasDiscount() {
         return discountTypeAmount.get(DiscountType.CHRISTMAS_COUNTDOWN);
     }
@@ -40,6 +34,12 @@ public class Discount {
 
     private int getGiveawayDiscount() {
         return discountTypeAmount.get(DiscountType.GIVEAWAY);
+    }
+
+    private int calculateTotalDiscount() {
+        return discountTypeAmount.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     private boolean hasAnyDiscount() {
