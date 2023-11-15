@@ -1,15 +1,7 @@
 package christmas.controller;
 
-import christmas.domain.date.VisitDate;
-import christmas.domain.discount.Discount;
-import christmas.domain.discount.TotalDiscount;
 import christmas.domain.discount.strategy.DiscountStrategy;
-import christmas.domain.menu.strategy.AppetizerStrategy;
-import christmas.domain.menu.strategy.DessertStrategy;
-import christmas.domain.menu.strategy.DrinkStrategy;
-import christmas.domain.menu.strategy.MainDishStrategy;
 import christmas.domain.menu.strategy.MenuStrategy;
-import christmas.domain.order.Order;
 import christmas.dto.DiscountDto;
 import christmas.dto.OrderDto;
 import christmas.dto.TotalDiscountDto;
@@ -29,14 +21,17 @@ public class EventPlannerController {
     private final DateService dateService;
     private final TotalDiscountService totalDiscountService;
     private final List<DiscountStrategy> discountStrategies;
+    private final List<MenuStrategy> menuStrategies;
 
     public EventPlannerController(OrderService orderService, DateService dateService,
                                   TotalDiscountService totalDiscountService,
-                                  List<DiscountStrategy> discountStrategies) {
+                                  List<DiscountStrategy> discountStrategies,
+                                  List<MenuStrategy> menuStrategies) {
         this.orderService = orderService;
         this.dateService = dateService;
         this.totalDiscountService = totalDiscountService;
         this.discountStrategies = discountStrategies;
+        this.menuStrategies = menuStrategies;
     }
 
     public void run() {
@@ -44,7 +39,7 @@ public class EventPlannerController {
         VisitDateDto visitDateDto = dateService.getDateInput(InputView::getUserInput, MessageOutputView::printDateInputRequestMessage,
                 MessageOutputView::printErrorMessage).toDto();
         OrderDto orderDto = orderService.order(InputView::getUserInput, MessageOutputView::printMenuQuantityInputRequestMessage,
-                MessageOutputView::printErrorMessage).toDto();
+                MessageOutputView::printErrorMessage, menuStrategies).toDto();
         DiscountService discountService = new DiscountService(visitDateDto, orderDto, discountStrategies);
         DiscountDto discountDto = discountService.createDiscount().toDto();
         TotalDiscountDto totalDiscountDto = totalDiscountService.createTotalDiscount(discountDto, orderDto).toDto();

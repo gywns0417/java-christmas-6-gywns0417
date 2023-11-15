@@ -24,11 +24,11 @@ public class EventPlannerFactory {
         List<DiscountStrategy> discountStrategies = List.of(
                 new ChristmasCountdownStrategy(), new GiveawayStrategy(),
                 new SpecialStrategy(), new WeekdayStrategy(), new WeekendStrategy());
-        OrderService orderService = new OrderService(menuStrategies);
+        OrderService orderService = new OrderService();
         DateService dateService = new DateService();
         TotalDiscountService totalDiscountService = new TotalDiscountService();
 
         return new EventPlannerController(orderService, dateService,
-                totalDiscountService, discountStrategies);
+                totalDiscountService, discountStrategies, menuStrategies);
     }
 }
