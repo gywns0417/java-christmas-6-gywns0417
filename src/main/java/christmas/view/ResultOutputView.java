@@ -92,7 +92,7 @@ public class ResultOutputView {
     }
 
     private static void printTotalDiscount(int totalDiscount) {
-        System.out.printf(RESULT_TOTAL_DISCOUNT_RESULT_MESSAGE.getMessage(), discountFormat.format(totalDiscount));
+        System.out.printf(RESULT_TOTAL_DISCOUNT_RESULT_MESSAGE.getMessage(), amountFormat.format(totalDiscount));
     }
     private static void printExpectPurchaseAmount(int discountedPurchaseAmount) {
         System.out.printf(RESULT_EXPECT_PAYMENT_MESSAGE.getMessage(), amountFormat.format(discountedPurchaseAmount));
