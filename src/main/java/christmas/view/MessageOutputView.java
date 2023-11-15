@@ -5,6 +5,7 @@ import static christmas.config.EventMessage.MENU_QUANTITY_INPUT_REQUEST_MESSAGE;
 import static christmas.config.EventMessage.WELCOME_MESSAGE;
 
 public class MessageOutputView {
+    private MessageOutputView() {}
     public static void printWelcomeMessage() {
         System.out.println(WELCOME_MESSAGE.getMessage());
     }

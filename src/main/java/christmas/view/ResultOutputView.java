@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class ResultOutputView {
+    private ResultOutputView() {}
     private static final DecimalFormat amountFormat = new DecimalFormat("#,###");
     private static final DecimalFormat discountFormat = new DecimalFormat("-#,###");
 
