@@ -29,7 +29,7 @@ public class Order {
 
     public Order(OrderMenu orderMenu, List<MenuStrategy> strategies) {
         this.orderMenu = orderMenu;
-        createOrder(orderMenu.getOrderMenuQuantity(), strategies);
+        assignEachMenu(orderMenu.getOrderMenuQuantity(), strategies);
         validatePurchaseOnlyDrinks();
     }
 
@@ -42,7 +42,7 @@ public class Order {
                 Drink.getTotalAmount(drink) + MainDish.getTotalAmount(mainDish);
     }
 
-    private void createOrder(HashMap<String, Integer> orderMenuQuantity, List<MenuStrategy> strategies) {
+    private void assignEachMenu(HashMap<String, Integer> orderMenuQuantity, List<MenuStrategy> strategies) {
         for (Entry<String, Integer> menuQuantity : orderMenuQuantity.entrySet()) {
             String menuName = menuQuantity.getKey();
             int quantity = menuQuantity.getValue();
